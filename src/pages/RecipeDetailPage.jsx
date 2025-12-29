@@ -11,6 +11,7 @@ const categorieColors = {
     'Plat': 'from-orange-400 to-orange-600',
     'Dessert': 'from-pink-400 to-pink-600',
     'Gourmandises': 'from-amber-400 to-amber-600',
+    'Boisson': 'from-purple-400 to-purple-600',
 };
 
 export default function RecipeDetailPage() {

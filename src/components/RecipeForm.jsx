@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { recipesAPI } from '../api';
 
-const CATEGORIES = ['Entrée', 'Plat', 'Dessert', 'Gourmandises'];
+const CATEGORIES = ['Entrée', 'Plat', 'Dessert', 'Gourmandises', 'Boisson'];
 
 const ALL_TAGS = {
     regime: [
@@ -14,6 +14,10 @@ const ALL_TAGS = {
         { value: 'Végan', icon: '🌱', color: 'bg-emerald-100 text-emerald-700' },
         { value: 'Sans gluten', icon: '🌾', color: 'bg-amber-100 text-amber-700' },
         { value: 'Sans lactose', icon: '🥛', color: 'bg-blue-100 text-blue-700' },
+    ],
+    type: [
+        { value: 'Viande', icon: '🥩', color: 'bg-red-100 text-red-700' },
+        { value: 'Poissons', icon: '🐟', color: 'bg-blue-100 text-blue-700' },
     ],
     saison: [
         { value: 'Printemps', icon: '🌸', color: 'bg-pink-100 text-pink-700' },
@@ -246,6 +250,25 @@ export default function RecipeForm({ initialData = null, onSuccess }) {
                         <p className="text-sm text-gray-600 mb-2">Régime alimentaire</p>
                         <div className="flex flex-wrap gap-2">
                             {ALL_TAGS.regime.map((tag) => (
+                                <button
+                                    key={tag.value}
+                                    type="button"
+                                    onClick={() => toggleTag(tag.value)}
+                                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${selectedTags.includes(tag.value)
+                                        ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        }`}
+                                >
+                                    {tag.icon} {tag.value}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <p className="text-sm text-gray-600 mb-2">Type</p>
+                        <div className="flex flex-wrap gap-2">
+                            {ALL_TAGS.type.map((tag) => (
                                 <button
                                     key={tag.value}
                                     type="button"

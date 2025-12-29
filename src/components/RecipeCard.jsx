@@ -8,6 +8,7 @@ const categorieColors = {
     'Plat': 'bg-orange-500',
     'Dessert': 'bg-pink-500',
     'Gourmandises': 'bg-amber-500',
+    'Boisson': 'bg-purple-500',
 };
 
 const TAG_STYLES = {

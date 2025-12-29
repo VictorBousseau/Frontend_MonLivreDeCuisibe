@@ -60,7 +60,10 @@ export const recipesAPI = {
 // ============== FRIGO SEARCH API ==============
 
 export const frigoAPI = {
-    search: (ingredients) => api.post('/search/frigo', { ingredients }),
+    search: (ingredients, strictMode = false) => api.post('/search/frigo', {
+        ingredients,
+        strict_mode: strictMode
+    }),
 };
 
 // ============== ADMIN API ==============

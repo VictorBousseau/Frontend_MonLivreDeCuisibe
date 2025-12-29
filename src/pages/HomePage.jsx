@@ -5,13 +5,14 @@ import { useState, useEffect } from 'react';
 import { recipesAPI } from '../api';
 import RecipeCard from '../components/RecipeCard';
 
-const CATEGORIES = ['Entrée', 'Plat', 'Dessert', 'Gourmandises'];
+const CATEGORIES = ['Entrée', 'Plat', 'Dessert', 'Gourmandises', 'Boisson'];
 
 const CATEGORY_ICONS = {
     'Entrée': '🥗',
     'Plat': '🍝',
     'Dessert': '🍰',
     'Gourmandises': '🍯',
+    'Boisson': '🍹',
 };
 
 const ALL_TAGS = [
@@ -19,6 +20,8 @@ const ALL_TAGS = [
     { value: 'Végan', icon: '🌱', color: 'bg-emerald-100 text-emerald-700' },
     { value: 'Sans gluten', icon: '🌾', color: 'bg-amber-100 text-amber-700' },
     { value: 'Sans lactose', icon: '🥛', color: 'bg-blue-100 text-blue-700' },
+    { value: 'Viande', icon: '🥩', color: 'bg-red-100 text-red-700' },
+    { value: 'Poissons', icon: '🐟', color: 'bg-blue-100 text-blue-700' },
     { value: 'Printemps', icon: '🌸', color: 'bg-pink-100 text-pink-700' },
     { value: 'Été', icon: '☀️', color: 'bg-yellow-100 text-yellow-700' },
     { value: 'Automne', icon: '🍂', color: 'bg-orange-100 text-orange-700' },

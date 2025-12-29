@@ -12,6 +12,7 @@ export default function FridgeSearch() {
     const [loading, setLoading] = useState(false);
     const [searched, setSearched] = useState(false);
     const [error, setError] = useState('');
+    const [strictMode, setStrictMode] = useState(false);
 
     const handleSearch = async () => {
         if (!inputValue.trim()) return;
@@ -27,7 +28,7 @@ export default function FridgeSearch() {
                 .map((ing) => ing.trim())
                 .filter((ing) => ing);
 
-            const response = await frigoAPI.search(ingredients);
+            const response = await frigoAPI.search(ingredients, strictMode);
             setResults(response.data);
         } catch (err) {
             setError('Erreur lors de la recherche');
@@ -60,7 +61,7 @@ export default function FridgeSearch() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                     Vos ingrédients disponibles (séparés par des virgules)
                 </label>
-                <div className="flex gap-4">
+                <div className="flex flex-col md:flex-row gap-4">
                     <input
                         type="text"
                         value={inputValue}
@@ -76,6 +77,26 @@ export default function FridgeSearch() {
                     >
                         {loading ? 'Recherche...' : '🔍 Chercher'}
                     </button>
+                </div>
+
+                {/* Toggle Mode Strict */}
+                <div className="mt-4 flex items-center gap-3">
+                    <button
+                        onClick={() => setStrictMode(!strictMode)}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${strictMode ? 'bg-blue-600' : 'bg-gray-200'
+                            }`}
+                    >
+                        <span
+                            className={`${strictMode ? 'translate-x-6' : 'translate-x-1'
+                                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+                        />
+                    </button>
+                    <span
+                        className={`text-sm font-medium cursor-pointer ${strictMode ? 'text-blue-700' : 'text-gray-500'}`}
+                        onClick={() => setStrictMode(!strictMode)}
+                    >
+                        {strictMode ? "Mode Strict : Recettes complètes uniquement" : "Mode Large : Recettes contenant ces ingrédients"}
+                    </span>
                 </div>
 
                 {/* Tags des ingrédients recherchés */}
@@ -117,7 +138,10 @@ export default function FridgeSearch() {
                                         className="bg-white rounded-xl shadow-lg p-4 flex items-center gap-4"
                                     >
                                         {/* Badge match count */}
-                                        <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex flex-col items-center justify-center text-white">
+                                        <div className={`flex-shrink-0 w-16 h-16 rounded-full flex flex-col items-center justify-center text-white ${result.match_count === result.recipe.ingredients?.length
+                                                ? 'bg-gradient-to-br from-green-500 to-emerald-600 ring-4 ring-green-100'
+                                                : 'bg-gradient-to-br from-blue-400 to-blue-600'
+                                            }`}>
                                             <span className="text-xl font-bold">{result.match_count}</span>
                                             <span className="text-xs">match</span>
                                         </div>
@@ -128,8 +152,8 @@ export default function FridgeSearch() {
                                         </div>
 
                                         {/* Ingrédients matchés */}
-                                        <div className="flex-shrink-0">
-                                            <p className="text-xs text-gray-500 mb-1">Ingrédients correspondants:</p>
+                                        <div className="hidden md:block flex-shrink-0 w-48">
+                                            <p className="text-xs text-gray-500 mb-1">Ingrédients trouvés:</p>
                                             <div className="flex flex-wrap gap-1">
                                                 {result.matched_ingredients.map((ing, i) => (
                                                     <span
@@ -149,10 +173,13 @@ export default function FridgeSearch() {
                         <div className="text-center py-12 bg-white rounded-2xl shadow">
                             <div className="text-6xl mb-4">😕</div>
                             <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                                Aucune recette trouvée
+                                Aucune recette trouvée {strictMode ? "en mode strict" : ""}
                             </h3>
                             <p className="text-gray-600">
-                                Essayez avec d'autres ingrédients ou ajoutez de nouvelles recettes !
+                                {strictMode
+                                    ? "Essayez de désactiver le mode strict pour plus de résultats."
+                                    : "Essayez avec d'autres ingrédients ou ajoutez de nouvelles recettes !"
+                                }
                             </p>
                         </div>
                     )}
