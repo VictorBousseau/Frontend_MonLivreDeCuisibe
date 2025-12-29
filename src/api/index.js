@@ -43,8 +43,11 @@ export const authAPI = {
 // ============== RECIPES API ==============
 
 export const recipesAPI = {
-    getAll: (categorie = null) => {
-        const params = categorie ? { categorie } : {};
+    getAll: (categorie = null, search = null, auteur_id = null) => {
+        const params = {};
+        if (categorie) params.categorie = categorie;
+        if (search) params.search = search;
+        if (auteur_id) params.auteur_id = auteur_id;
         return api.get('/recipes', { params });
     },
     getById: (id) => api.get(`/recipes/${id}`),
@@ -59,4 +62,14 @@ export const frigoAPI = {
     search: (ingredients) => api.post('/search/frigo', { ingredients }),
 };
 
+// ============== ADMIN API ==============
+
+export const adminAPI = {
+    getUsers: () => api.get('/admin/users'),
+    deleteUser: (id) => api.delete(`/admin/users/${id}`),
+    toggleAdmin: (id) => api.put(`/admin/users/${id}/toggle-admin`),
+    deleteRecipe: (id) => api.delete(`/admin/recipes/${id}`),
+};
+
 export default api;
+

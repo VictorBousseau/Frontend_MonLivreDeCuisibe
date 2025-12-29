@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { recipesAPI } from '../api';
 
-const CATEGORIES = ['Entrée', 'Plat', 'Dessert'];
+const CATEGORIES = ['Entrée', 'Plat', 'Dessert', 'Gourmandises'];
 
 export default function RecipeForm({ initialData = null, onSuccess }) {
     const navigate = useNavigate();

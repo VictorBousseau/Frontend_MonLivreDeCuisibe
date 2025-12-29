@@ -7,6 +7,7 @@ const categorieColors = {
     'Entrée': 'bg-green-500',
     'Plat': 'bg-orange-500',
     'Dessert': 'bg-pink-500',
+    'Gourmandises': 'bg-amber-500',
 };
 
 export default function RecipeCard({ recipe }) {

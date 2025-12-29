@@ -10,6 +10,7 @@ const categorieColors = {
     'Entrée': 'from-green-400 to-green-600',
     'Plat': 'from-orange-400 to-orange-600',
     'Dessert': 'from-pink-400 to-pink-600',
+    'Gourmandises': 'from-amber-400 to-amber-600',
 };
 
 export default function RecipeDetailPage() {
@@ -72,6 +73,7 @@ export default function RecipeDetailPage() {
 
     const bgGradient = categorieColors[recipe.categorie] || 'from-gray-400 to-gray-600';
     const isAuthor = user && user.id === recipe.auteur_id;
+    const canEdit = isAuthor || (user && user.is_admin);
 
     return (
         <div className="max-w-4xl mx-auto">
@@ -88,8 +90,8 @@ export default function RecipeDetailPage() {
                         </p>
                     </div>
 
-                    {/* Actions auteur */}
-                    {isAuthor && (
+                    {/* Actions auteur ou admin */}
+                    {canEdit && (
                         <div className="flex gap-2">
                             <Link
                                 to={`/edit/${recipe.id}`}
