@@ -28,10 +28,15 @@ export default function RecipeForm({ initialData = null, onSuccess }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    // Normaliser la catégorie (trouver la correspondance exacte dans la liste)
+    const normalizedCategory = initialData?.categorie
+        ? CATEGORIES.find(c => c.toLowerCase() === initialData.categorie.toLowerCase()) || initialData.categorie
+        : 'Plat';
+
     // État du formulaire
     const [formData, setFormData] = useState({
         titre: initialData?.titre || '',
-        categorie: initialData?.categorie || 'Plat',
+        categorie: normalizedCategory,
         temps_prep: initialData?.temps_prep || '',
         temps_cuisson: initialData?.temps_cuisson || '',
         temperature: initialData?.temperature || '',
@@ -246,8 +251,8 @@ export default function RecipeForm({ initialData = null, onSuccess }) {
                                     type="button"
                                     onClick={() => toggleTag(tag.value)}
                                     className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${selectedTags.includes(tag.value)
-                                            ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
-                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
                                     {tag.icon} {tag.value}
@@ -265,8 +270,8 @@ export default function RecipeForm({ initialData = null, onSuccess }) {
                                     type="button"
                                     onClick={() => toggleTag(tag.value)}
                                     className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${selectedTags.includes(tag.value)
-                                            ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
-                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
                                     {tag.icon} {tag.value}

@@ -71,7 +71,11 @@ export default function RecipeDetailPage() {
         );
     }
 
-    const bgGradient = categorieColors[recipe.categorie] || 'from-gray-400 to-gray-600';
+    // Trouver la couleur (insensible à la casse)
+    const categoryKey = Object.keys(categorieColors).find(
+        key => key.toLowerCase() === (recipe.categorie || '').toLowerCase()
+    );
+    const bgGradient = categorieColors[categoryKey] || 'from-gray-400 to-gray-600';
     const isAuthor = user && user.id === recipe.auteur_id;
     const canEdit = isAuthor || (user && user.is_admin);
 

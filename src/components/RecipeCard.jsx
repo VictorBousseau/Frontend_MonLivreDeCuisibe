@@ -22,7 +22,11 @@ const TAG_STYLES = {
 };
 
 export default function RecipeCard({ recipe, onAuthorClick, onTagClick }) {
-    const bgColor = categorieColors[recipe.categorie] || 'bg-gray-500';
+    // Trouver la couleur correspondant à la catégorie (insensible à la casse)
+    const categoryKey = Object.keys(categorieColors).find(
+        key => key.toLowerCase() === (recipe.categorie || '').toLowerCase()
+    );
+    const bgColor = categorieColors[categoryKey] || 'bg-gray-500';
     const tags = recipe.tags || [];
 
     const handleAuthorClick = (e) => {

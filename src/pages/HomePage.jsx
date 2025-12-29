@@ -88,9 +88,12 @@ export default function HomePage() {
         clearTagFilter();
     };
 
-    // Grouper les recettes par catégorie
+    // Grouper les recettes par catégorie (insensible à la casse)
     const groupedRecipes = CATEGORIES.reduce((acc, cat) => {
-        acc[cat] = recipes.filter((r) => r.categorie === cat);
+        // Normalisation pour comparer "DESSERT" avec "Dessert"
+        acc[cat] = recipes.filter((r) =>
+            r.categorie && r.categorie.toLowerCase() === cat.toLowerCase()
+        );
         return acc;
     }, {});
 
@@ -141,8 +144,8 @@ export default function HomePage() {
                             key={tag.value}
                             onClick={() => setTagFilter(tagFilter === tag.value ? null : tag.value)}
                             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${tagFilter === tag.value
-                                    ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
-                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
+                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                 }`}
                         >
                             {tag.icon} {tag.value}
