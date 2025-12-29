@@ -12,52 +12,64 @@ const MOIS = [
 
 const SAISONS = {
     Janvier: {
-        legumes: ['Carotte', 'Céleri', 'Chou', 'Chou de Bruxelles', 'Chou-fleur', 'Endive', 'Épinard', 'Mâche', 'Navet', 'Oignon', 'Poireau', 'Pomme de terre', 'Potiron', 'Topinambour'],
-        fruits: ['Citron', 'Clémentine', 'Kiwi', 'Mandarine', 'Orange', 'Pamplemousse', 'Poire', 'Pomme']
+        legumes: ['Ail', 'Betterave', 'Carotte', 'Céleri', 'Chou', 'Courge', 'Endive', 'Épinard', 'Frisée', 'Mâche', 'Navet', 'Panais', 'Poireau', 'Topinambour'],
+        fruits: ['Amande sèche', 'Citron', 'Clémentine', 'Kaki', 'Kiwi', 'Mandarine', 'Orange', 'Pamplemousse', 'Physalis', 'Poire', 'Pomme'],
+        cereales: ['Lentille']
     },
     Février: {
-        legumes: ['Carotte', 'Céleri', 'Chou', 'Chou de Bruxelles', 'Chou-fleur', 'Endive', 'Épinard', 'Mâche', 'Navet', 'Oignon', 'Poireau', 'Pomme de terre', 'Topinambour'],
-        fruits: ['Citron', 'Clémentine', 'Kiwi', 'Mandarine', 'Orange', 'Pamplemousse', 'Poire', 'Pomme']
+        legumes: ['Ail', 'Betterave', 'Carotte', 'Céleri-rave', 'Chou', 'Endive', 'Épinard', 'Frisée', 'Mâche', 'Navet', 'Panais', 'Poireau', 'Radis', 'Salsifi', 'Topinambour'],
+        fruits: ['Amande sèche', 'Citron', 'Clémentine', 'Kiwi', 'Mandarine', 'Orange', 'Pamplemousse', 'Physalis', 'Poire', 'Pomme'],
+        cereales: ['Lentille']
     },
     Mars: {
-        legumes: ['Carotte', 'Céleri', 'Chou', 'Chou-fleur', 'Endive', 'Épinard', 'Navet', 'Oignon', 'Poireau', 'Pomme de terre', 'Radis'],
-        fruits: ['Citron', 'Kiwi', 'Orange', 'Pamplemousse', 'Poire', 'Pomme']
+        legumes: ['Ail', 'Asperge', 'Betterave', 'Blette', 'Carotte', 'Céleri-rave', 'Chou', 'Crosne', 'Endive', 'Épinard', 'Frisée', 'Navet', 'Panais', 'Poireau', 'Radis', 'Salsifi', 'Topinambour'],
+        fruits: ['Amande sèche', 'Citron', 'Kiwi', 'Orange', 'Pamplemousse', 'Poire', 'Pomme'],
+        cereales: ['Lentille']
     },
     Avril: {
-        legumes: ['Artichaut', 'Asperge', 'Carotte', 'Épinard', 'Oignon', 'Petit pois', 'Pomme de terre', 'Radis'],
-        fruits: ['Citron', 'Pamplemousse', 'Pomme', 'Rhubarbe']
+        legumes: ['Ail', 'Artichaut', 'Asperge', 'Betterave', 'Blette', 'Carotte', 'Chou-fleur', 'Concombre', 'Endive', 'Épinard', 'Frisée', 'Laitue', 'Navet', 'Oignon', 'Petit pois', 'Poireau', 'Radis'],
+        fruits: ['Amande sèche', 'Citron', 'Pamplemousse', 'Poire', 'Pomme'],
+        cereales: []
     },
     Mai: {
-        legumes: ['Artichaut', 'Asperge', 'Carotte', 'Chou-fleur', 'Concombre', 'Courgette', 'Épinard', 'Laitue', 'Oignon', 'Petit pois', 'Radis'],
-        fruits: ['Cerise', 'Fraise', 'Rhubarbe']
+        legumes: ['Ail', 'Artichaut', 'Asperge', 'Aubergine', 'Betterave', 'Blette', 'Carotte', 'Chou-fleur', 'Concombre', 'Courgette', 'Épinard', 'Laitue', 'Navet', 'Oignon', 'Petit pois', 'Radis'],
+        fruits: ['Amande sèche', 'Cerise', 'Fraise', 'Pamplemousse', 'Rhubarbe', 'Tomate'],
+        cereales: []
     },
     Juin: {
-        legumes: ['Artichaut', 'Asperge', 'Aubergine', 'Carotte', 'Concombre', 'Courgette', 'Haricot vert', 'Laitue', 'Oignon', 'Petit pois', 'Poivron', 'Radis', 'Tomate'],
-        fruits: ['Abricot', 'Cerise', 'Fraise', 'Framboise', 'Melon', 'Pêche']
+        legumes: ['Ail', 'Artichaut', 'Asperge', 'Aubergine', 'Blette', 'Brocoli', 'Carotte', 'Chou romanesco', 'Concombre', 'Courgette', 'Épinard', 'Fenouil', 'Haricot vert', 'Laitue', 'Navet', 'Petit pois', 'Poivron', 'Radis'],
+        fruits: ['Abricot', 'Amande sèche', 'Brugnon', 'Cassis', 'Cerise', 'Citron', 'Fraise', 'Framboise', 'Groseille', 'Melon', 'Pamplemousse', 'Pastèque', 'Pêche', 'Pomme', 'Prune', 'Rhubarbe', 'Tomate'],
+        cereales: ['Avoine', 'Orge d\'hiver', 'Pois', 'Seigle']
     },
     Juillet: {
-        legumes: ['Artichaut', 'Aubergine', 'Carotte', 'Concombre', 'Courgette', 'Haricot vert', 'Laitue', 'Oignon', 'Poivron', 'Radis', 'Tomate'],
-        fruits: ['Abricot', 'Cassis', 'Cerise', 'Figue', 'Fraise', 'Framboise', 'Groseille', 'Melon', 'Myrtille', 'Nectarine', 'Pastèque', 'Pêche', 'Prune']
+        legumes: ['Ail', 'Artichaut', 'Asperge', 'Aubergine', 'Betterave', 'Blette', 'Brocoli', 'Carotte', 'Céleri-branche', 'Concombre', 'Courgette', 'Épinard', 'Fenouil', 'Haricot vert', 'Laitue', 'Petit pois', 'Poivron', 'Radis'],
+        fruits: ['Abricot', 'Amande fraîche', 'Amande sèche', 'Brugnon', 'Cassis', 'Cerise', 'Figue', 'Fraise', 'Framboise', 'Groseille', 'Melon', 'Myrtille', 'Nectarine', 'Pastèque', 'Pêche', 'Poire', 'Prune', 'Rhubarbe', 'Tomate'],
+        cereales: ['Avoine', 'Blé dur', 'Blé tendre', 'Féveroles et fèves', 'Haricot blanc', 'Maïs', 'Orge', 'Pois', 'Seigle']
     },
     Août: {
-        legumes: ['Artichaut', 'Aubergine', 'Carotte', 'Concombre', 'Courgette', 'Haricot vert', 'Laitue', 'Oignon', 'Poivron', 'Radis', 'Tomate'],
-        fruits: ['Abricot', 'Cassis', 'Figue', 'Fraise', 'Framboise', 'Melon', 'Mirabelle', 'Mûre', 'Myrtille', 'Nectarine', 'Pastèque', 'Pêche', 'Poire', 'Prune', 'Raisin']
+        legumes: ['Ail', 'Artichaut', 'Aubergine', 'Betterave', 'Blette', 'Brocoli', 'Carotte', 'Céleri-branche', 'Chou', 'Courge', 'Courgette', 'Épinard', 'Fenouil', 'Frisée', 'Haricot vert', 'Laitue', 'Poivron', 'Radis'],
+        fruits: ['Abricot', 'Amande fraîche', 'Amande sèche', 'Baie de goji', 'Brugnon', 'Cassis', 'Figue', 'Fraise', 'Framboise', 'Groseille', 'Melon', 'Mirabelle', 'Mûre', 'Myrtille', 'Nectarine', 'Noisette', 'Pastèque', 'Pêche', 'Poire', 'Pomme', 'Prune', 'Pruneau', 'Raisin', 'Tomate'],
+        cereales: ['Avoine', 'Blé dur', 'Blé tendre', 'Féveroles et fèves', 'Haricot blanc', 'Maïs', 'Orge', 'Pois', 'Quinoa', 'Seigle']
     },
     Septembre: {
-        legumes: ['Aubergine', 'Carotte', 'Chou', 'Chou-fleur', 'Concombre', 'Courgette', 'Épinard', 'Haricot vert', 'Laitue', 'Oignon', 'Poireau', 'Poivron', 'Potiron', 'Tomate'],
-        fruits: ['Figue', 'Melon', 'Mirabelle', 'Mûre', 'Myrtille', 'Pêche', 'Poire', 'Pomme', 'Prune', 'Raisin']
+        legumes: ['Ail', 'Artichaut', 'Aubergine', 'Betterave', 'Blette', 'Brocoli', 'Carotte', 'Céleri-branche', 'Chou', 'Concombre', 'Courge', 'Courgette', 'Épinard', 'Fenouil', 'Frisée', 'Haricot vert', 'Laitue', 'Panais', 'Patate douce', 'Poireau', 'Poivron', 'Potiron', 'Radis'],
+        fruits: ['Amande sèche', 'Baie de goji', 'Coing', 'Figue', 'Melon', 'Mirabelle', 'Mûre', 'Myrtille', 'Noisette', 'Noix', 'Pastèque', 'Pêche', 'Poire', 'Pomme', 'Prune', 'Pruneau', 'Raisin', 'Tomate'],
+        cereales: ['Haricot blanc', 'Maïs', 'Quinoa', 'Riz', 'Sarrasin', 'Tournesol']
     },
     Octobre: {
-        legumes: ['Carotte', 'Céleri', 'Chou', 'Chou de Bruxelles', 'Chou-fleur', 'Courge', 'Endive', 'Épinard', 'Navet', 'Oignon', 'Poireau', 'Pomme de terre', 'Potiron'],
-        fruits: ['Châtaigne', 'Coing', 'Figue', 'Noix', 'Poire', 'Pomme', 'Raisin']
+        legumes: ['Ail', 'Aubergine', 'Betterave', 'Blette', 'Brocoli', 'Carotte', 'Céleri', 'Chou', 'Concombre', 'Courge', 'Courgette', 'Échalote', 'Endive', 'Épinard', 'Fenouil', 'Frisée', 'Haricot vert', 'Laitue', 'Navet', 'Panais', 'Patate douce', 'Poireau', 'Radis', 'Rutabaga', 'Salsifi', 'Topinambour'],
+        fruits: ['Amande sèche', 'Baie de goji', 'Châtaigne', 'Citron', 'Coing', 'Figue', 'Framboise', 'Kaki', 'Myrtille', 'Noisette', 'Noix', 'Physalis', 'Poire', 'Pomme', 'Raisin', 'Tomate'],
+        cereales: ['Haricot blanc', 'Maïs', 'Quinoa', 'Riz', 'Sarrasin', 'Soja']
     },
     Novembre: {
-        legumes: ['Carotte', 'Céleri', 'Chou', 'Chou de Bruxelles', 'Chou-fleur', 'Courge', 'Endive', 'Épinard', 'Mâche', 'Navet', 'Oignon', 'Poireau', 'Pomme de terre', 'Potiron', 'Topinambour'],
-        fruits: ['Châtaigne', 'Clémentine', 'Coing', 'Kiwi', 'Mandarine', 'Orange', 'Poire', 'Pomme']
+        legumes: ['Ail', 'Betterave', 'Brocoli', 'Cardon', 'Carotte', 'Céleri', 'Chou', 'Courge', 'Crosne', 'Échalote', 'Endive', 'Épinard', 'Fenouil', 'Frisée', 'Mâche', 'Navet', 'Panais', 'Poireau', 'Radis', 'Rutabaga', 'Salsifi', 'Topinambour'],
+        fruits: ['Amande sèche', 'Châtaigne', 'Citron', 'Clémentine', 'Coing', 'Kaki', 'Kiwi', 'Mandarine', 'Orange', 'Physalis', 'Poire', 'Pomme'],
+        cereales: ['Lentille', 'Maïs']
     },
     Décembre: {
-        legumes: ['Carotte', 'Céleri', 'Chou', 'Chou de Bruxelles', 'Chou-fleur', 'Courge', 'Endive', 'Épinard', 'Mâche', 'Navet', 'Oignon', 'Poireau', 'Pomme de terre', 'Potiron', 'Topinambour'],
-        fruits: ['Châtaigne', 'Clémentine', 'Kiwi', 'Mandarine', 'Orange', 'Pamplemousse', 'Poire', 'Pomme']
+        legumes: ['Ail', 'Betterave', 'Carotte', 'Céleri', 'Chou', 'Courge', 'Crosne', 'Échalote', 'Endive', 'Épinard', 'Frisée', 'Mâche', 'Navet', 'Panais', 'Poireau', 'Radis', 'Rutabaga', 'Salsifi', 'Topinambour'],
+        fruits: ['Amande sèche', 'Châtaigne', 'Citron', 'Clémentine', 'Kaki', 'Kiwi', 'Mandarine', 'Orange', 'Physalis', 'Poire', 'Pomme'],
+        cereales: ['Avoine', 'Blé dur', 'Blé tendre', 'Féveroles et fèves', 'Lentille', 'Orge', 'Pois', 'Seigle']
     }
 };
 
@@ -77,7 +89,6 @@ const SAISON_COLORS = {
 };
 
 export default function SaisonPage() {
-    // Déterminer le mois actuel
     const moisActuel = MOIS[new Date().getMonth()];
     const [selectedMois, setSelectedMois] = useState(moisActuel);
 
@@ -117,14 +128,14 @@ export default function SaisonPage() {
             <div className={`bg-gradient-to-r ${SAISON_COLORS[selectedMois]} rounded-2xl p-8 text-white mb-8`}>
                 <h2 className="text-3xl font-bold text-center mb-2">{selectedMois}</h2>
                 <p className="text-center opacity-80">
-                    {data.legumes.length} légumes • {data.fruits.length} fruits
+                    {data.legumes.length} légumes • {data.fruits.length} fruits • {data.cereales.length} céréales
                 </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Légumes */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                         🥕 Légumes
                         <span className="text-sm font-normal text-gray-500">
                             ({data.legumes.length})
@@ -144,7 +155,7 @@ export default function SaisonPage() {
 
                 {/* Fruits */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                         🍎 Fruits
                         <span className="text-sm font-normal text-gray-500">
                             ({data.fruits.length})
@@ -160,6 +171,30 @@ export default function SaisonPage() {
                             </span>
                         ))}
                     </div>
+                </div>
+
+                {/* Céréales & Légumineuses */}
+                <div className="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        🌾 Céréales & Légumineuses
+                        <span className="text-sm font-normal text-gray-500">
+                            ({data.cereales.length})
+                        </span>
+                    </h3>
+                    {data.cereales.length > 0 ? (
+                        <div className="flex flex-wrap gap-2">
+                            {data.cereales.map((cereale) => (
+                                <span
+                                    key={cereale}
+                                    className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-medium"
+                                >
+                                    {cereale}
+                                </span>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-gray-400 text-sm italic">Pas de récolte ce mois-ci</p>
+                    )}
                 </div>
             </div>
 
