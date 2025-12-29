@@ -178,7 +178,7 @@ export default function RecipeDetailPage() {
                                     <span className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-orange-400 to-red-500 text-white rounded-full flex items-center justify-center font-bold">
                                         {index + 1}
                                     </span>
-                                    <p className="text-gray-700 pt-1">{step.description}</p>
+                                    <p className="text-gray-700 pt-1 whitespace-pre-wrap">{step.description}</p>
                                 </li>
                             ))}
                         </ol>
