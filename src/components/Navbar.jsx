@@ -37,6 +37,12 @@ export default function Navbar() {
                         >
                             🧊 Frigo
                         </Link>
+                        <Link
+                            to="/saison"
+                            className="text-white/90 hover:text-white transition-colors font-medium"
+                        >
+                            🌿 Saison
+                        </Link>
 
                         {user ? (
                             <>
