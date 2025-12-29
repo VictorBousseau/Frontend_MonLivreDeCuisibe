@@ -43,11 +43,12 @@ export const authAPI = {
 // ============== RECIPES API ==============
 
 export const recipesAPI = {
-    getAll: (categorie = null, search = null, auteur_id = null) => {
+    getAll: (categorie = null, search = null, auteur_id = null, tag = null) => {
         const params = {};
         if (categorie) params.categorie = categorie;
         if (search) params.search = search;
         if (auteur_id) params.auteur_id = auteur_id;
+        if (tag) params.tag = tag;
         return api.get('/recipes', { params });
     },
     getById: (id) => api.get(`/recipes/${id}`),

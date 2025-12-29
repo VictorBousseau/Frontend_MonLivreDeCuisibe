@@ -1,5 +1,5 @@
 /**
- * RecipeCard - Carte d'affichage d'une recette avec auteur
+ * RecipeCard - Carte d'affichage d'une recette avec auteur et tags
  */
 import { Link } from 'react-router-dom';
 
@@ -10,14 +10,34 @@ const categorieColors = {
     'Gourmandises': 'bg-amber-500',
 };
 
-export default function RecipeCard({ recipe, onAuthorClick }) {
+const TAG_STYLES = {
+    'Végétarien': { icon: '🥬', color: 'bg-green-100 text-green-700' },
+    'Végan': { icon: '🌱', color: 'bg-emerald-100 text-emerald-700' },
+    'Sans gluten': { icon: '🌾', color: 'bg-amber-100 text-amber-700' },
+    'Sans lactose': { icon: '🥛', color: 'bg-blue-100 text-blue-700' },
+    'Printemps': { icon: '🌸', color: 'bg-pink-100 text-pink-700' },
+    'Été': { icon: '☀️', color: 'bg-yellow-100 text-yellow-700' },
+    'Automne': { icon: '🍂', color: 'bg-orange-100 text-orange-700' },
+    'Hiver': { icon: '❄️', color: 'bg-cyan-100 text-cyan-700' },
+};
+
+export default function RecipeCard({ recipe, onAuthorClick, onTagClick }) {
     const bgColor = categorieColors[recipe.categorie] || 'bg-gray-500';
+    const tags = recipe.tags || [];
 
     const handleAuthorClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
         if (onAuthorClick) {
             onAuthorClick(recipe.auteur_id, recipe.auteur?.nom);
+        }
+    };
+
+    const handleTagClick = (e, tag) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (onTagClick) {
+            onTagClick(tag);
         }
     };
 
@@ -42,9 +62,31 @@ export default function RecipeCard({ recipe, onAuthorClick }) {
 
             <div className="p-5">
                 {/* Titre */}
-                <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
+                <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
                     {recipe.titre}
                 </h3>
+
+                {/* Tags */}
+                {tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mb-3">
+                        {tags.slice(0, 4).map((tag) => {
+                            const style = TAG_STYLES[tag] || { icon: '🏷️', color: 'bg-gray-100 text-gray-600' };
+                            return (
+                                <button
+                                    key={tag}
+                                    onClick={(e) => handleTagClick(e, tag)}
+                                    className={`text-xs px-2 py-0.5 rounded-full ${style.color} hover:opacity-80 transition-opacity`}
+                                    title={`Filtrer par ${tag}`}
+                                >
+                                    {style.icon} {tag}
+                                </button>
+                            );
+                        })}
+                        {tags.length > 4 && (
+                            <span className="text-xs text-gray-400">+{tags.length - 4}</span>
+                        )}
+                    </div>
+                )}
 
                 {/* Temps */}
                 <div className="flex items-center gap-4 text-gray-600 text-sm">

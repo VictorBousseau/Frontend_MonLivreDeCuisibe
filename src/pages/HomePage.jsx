@@ -1,5 +1,5 @@
 /**
- * HomePage - Affichage des recettes par catégorie avec recherche et filtre auteur
+ * HomePage - Affichage des recettes avec recherche, filtres par auteur et tags
  */
 import { useState, useEffect } from 'react';
 import { recipesAPI } from '../api';
@@ -14,6 +14,17 @@ const CATEGORY_ICONS = {
     'Gourmandises': '🍯',
 };
 
+const ALL_TAGS = [
+    { value: 'Végétarien', icon: '🥬', color: 'bg-green-100 text-green-700' },
+    { value: 'Végan', icon: '🌱', color: 'bg-emerald-100 text-emerald-700' },
+    { value: 'Sans gluten', icon: '🌾', color: 'bg-amber-100 text-amber-700' },
+    { value: 'Sans lactose', icon: '🥛', color: 'bg-blue-100 text-blue-700' },
+    { value: 'Printemps', icon: '🌸', color: 'bg-pink-100 text-pink-700' },
+    { value: 'Été', icon: '☀️', color: 'bg-yellow-100 text-yellow-700' },
+    { value: 'Automne', icon: '🍂', color: 'bg-orange-100 text-orange-700' },
+    { value: 'Hiver', icon: '❄️', color: 'bg-cyan-100 text-cyan-700' },
+];
+
 export default function HomePage() {
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -23,11 +34,12 @@ export default function HomePage() {
     const [searchInput, setSearchInput] = useState('');
     const [authorFilter, setAuthorFilter] = useState(null);
     const [authorName, setAuthorName] = useState('');
+    const [tagFilter, setTagFilter] = useState(null);
 
-    const fetchRecipes = async (search = '', auteurId = null) => {
+    const fetchRecipes = async (search = '', auteurId = null, tag = null) => {
         setLoading(true);
         try {
-            const response = await recipesAPI.getAll(null, search, auteurId);
+            const response = await recipesAPI.getAll(null, search, auteurId, tag);
             setRecipes(response.data);
         } catch (err) {
             setError('Erreur lors du chargement des recettes');
@@ -37,8 +49,8 @@ export default function HomePage() {
     };
 
     useEffect(() => {
-        fetchRecipes(searchQuery, authorFilter);
-    }, [searchQuery, authorFilter]);
+        fetchRecipes(searchQuery, authorFilter, tagFilter);
+    }, [searchQuery, authorFilter, tagFilter]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -62,14 +74,28 @@ export default function HomePage() {
         setAuthorName('');
     };
 
+    const handleTagClick = (tag) => {
+        setTagFilter(tag);
+    };
+
+    const clearTagFilter = () => {
+        setTagFilter(null);
+    };
+
+    const clearAllFilters = () => {
+        clearSearch();
+        clearAuthorFilter();
+        clearTagFilter();
+    };
+
     // Grouper les recettes par catégorie
     const groupedRecipes = CATEGORIES.reduce((acc, cat) => {
         acc[cat] = recipes.filter((r) => r.categorie === cat);
         return acc;
     }, {});
 
-    // Filtrer selon la sélection
     const displayCategories = filter === 'all' ? CATEGORIES : [filter];
+    const hasActiveFilters = searchQuery || authorFilter || tagFilter;
 
     return (
         <div>
@@ -84,7 +110,7 @@ export default function HomePage() {
             </div>
 
             {/* Barre de recherche */}
-            <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-6">
+            <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-4">
                 <div className="flex gap-2">
                     <div className="relative flex-1">
                         <input
@@ -104,20 +130,29 @@ export default function HomePage() {
                     >
                         Rechercher
                     </button>
-                    {searchQuery && (
-                        <button
-                            type="button"
-                            onClick={clearSearch}
-                            className="px-4 py-3 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-colors"
-                        >
-                            ✕
-                        </button>
-                    )}
                 </div>
             </form>
 
-            {/* Indicateur de filtre actif */}
-            {(searchQuery || authorFilter) && (
+            {/* Filtres par tags */}
+            <div className="max-w-4xl mx-auto mb-4">
+                <div className="flex flex-wrap justify-center gap-2">
+                    {ALL_TAGS.map((tag) => (
+                        <button
+                            key={tag.value}
+                            onClick={() => setTagFilter(tagFilter === tag.value ? null : tag.value)}
+                            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${tagFilter === tag.value
+                                    ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                }`}
+                        >
+                            {tag.icon} {tag.value}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {/* Indicateur de filtres actifs */}
+            {hasActiveFilters && (
                 <div className="text-center mb-4 flex items-center justify-center gap-2 flex-wrap">
                     {searchQuery && (
                         <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm">
@@ -127,10 +162,22 @@ export default function HomePage() {
                     )}
                     {authorFilter && (
                         <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                            👤 Recettes de {authorName}
+                            👤 {authorName}
                             <button onClick={clearAuthorFilter} className="ml-2 hover:text-blue-900">✕</button>
                         </span>
                     )}
+                    {tagFilter && (
+                        <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">
+                            🏷️ {tagFilter}
+                            <button onClick={clearTagFilter} className="ml-2 hover:text-purple-900">✕</button>
+                        </span>
+                    )}
+                    <button
+                        onClick={clearAllFilters}
+                        className="text-sm text-gray-500 hover:text-gray-700 underline"
+                    >
+                        Tout effacer
+                    </button>
                 </div>
             )}
 
@@ -171,18 +218,18 @@ export default function HomePage() {
                 </div>
             ) : recipes.length === 0 ? (
                 <div className="text-center py-12 bg-white rounded-2xl shadow">
-                    <div className="text-6xl mb-4">{searchQuery || authorFilter ? '🔍' : '🍳'}</div>
+                    <div className="text-6xl mb-4">{hasActiveFilters ? '🔍' : '🍳'}</div>
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                        {searchQuery || authorFilter ? 'Aucune recette trouvée' : "Aucune recette pour l'instant"}
+                        {hasActiveFilters ? 'Aucune recette trouvée' : "Aucune recette pour l'instant"}
                     </h3>
                     <p className="text-gray-600">
-                        {searchQuery || authorFilter
-                            ? 'Essayez avec un autre terme de recherche'
+                        {hasActiveFilters
+                            ? 'Essayez avec d\'autres filtres'
                             : 'Commencez par ajouter votre première recette !'}
                     </p>
-                    {(searchQuery || authorFilter) && (
+                    {hasActiveFilters && (
                         <button
-                            onClick={() => { clearSearch(); clearAuthorFilter(); }}
+                            onClick={clearAllFilters}
                             className="mt-4 text-orange-500 hover:underline"
                         >
                             Voir toutes les recettes
@@ -210,6 +257,7 @@ export default function HomePage() {
                                             key={recipe.id}
                                             recipe={recipe}
                                             onAuthorClick={handleAuthorClick}
+                                            onTagClick={handleTagClick}
                                         />
                                     ))}
                                 </div>

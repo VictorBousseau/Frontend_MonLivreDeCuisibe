@@ -1,12 +1,27 @@
 /**
  * RecipeForm - Formulaire d'ajout/modification de recette
- * Avec gestion dynamique des ingrédients et étapes
+ * Avec gestion dynamique des ingrédients, étapes et tags
  */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { recipesAPI } from '../api';
 
 const CATEGORIES = ['Entrée', 'Plat', 'Dessert', 'Gourmandises'];
+
+const ALL_TAGS = {
+    regime: [
+        { value: 'Végétarien', icon: '🥬', color: 'bg-green-100 text-green-700' },
+        { value: 'Végan', icon: '🌱', color: 'bg-emerald-100 text-emerald-700' },
+        { value: 'Sans gluten', icon: '🌾', color: 'bg-amber-100 text-amber-700' },
+        { value: 'Sans lactose', icon: '🥛', color: 'bg-blue-100 text-blue-700' },
+    ],
+    saison: [
+        { value: 'Printemps', icon: '🌸', color: 'bg-pink-100 text-pink-700' },
+        { value: 'Été', icon: '☀️', color: 'bg-yellow-100 text-yellow-700' },
+        { value: 'Automne', icon: '🍂', color: 'bg-orange-100 text-orange-700' },
+        { value: 'Hiver', icon: '❄️', color: 'bg-cyan-100 text-cyan-700' },
+    ],
+};
 
 export default function RecipeForm({ initialData = null, onSuccess }) {
     const navigate = useNavigate();
@@ -22,6 +37,9 @@ export default function RecipeForm({ initialData = null, onSuccess }) {
         temperature: initialData?.temperature || '',
     });
 
+    // État pour les tags
+    const [selectedTags, setSelectedTags] = useState(initialData?.tags || []);
+
     // État dynamique pour ingrédients
     const [ingredients, setIngredients] = useState(
         initialData?.ingredients || [{ nom: '', quantite: '', unite: '' }]
@@ -36,6 +54,15 @@ export default function RecipeForm({ initialData = null, onSuccess }) {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    // Handler pour les tags
+    const toggleTag = (tag) => {
+        setSelectedTags((prev) =>
+            prev.includes(tag)
+                ? prev.filter((t) => t !== tag)
+                : [...prev, tag]
+        );
     };
 
     // Handlers pour ingrédients dynamiques
@@ -69,7 +96,6 @@ export default function RecipeForm({ initialData = null, onSuccess }) {
     const removeStep = (index) => {
         if (steps.length > 1) {
             const updated = steps.filter((_, i) => i !== index);
-            // Réindexer les ordres
             const reindexed = updated.map((step, i) => ({ ...step, ordre: i + 1 }));
             setSteps(reindexed);
         }
@@ -82,12 +108,12 @@ export default function RecipeForm({ initialData = null, onSuccess }) {
         setError('');
 
         try {
-            // Préparer les données
             const data = {
                 ...formData,
                 temps_prep: formData.temps_prep ? parseInt(formData.temps_prep) : null,
                 temps_cuisson: formData.temps_cuisson ? parseInt(formData.temps_cuisson) : null,
                 temperature: formData.temperature ? parseInt(formData.temperature) : null,
+                tags: selectedTags,
                 ingredients: ingredients
                     .filter((ing) => ing.nom.trim())
                     .map((ing) => ({
@@ -202,6 +228,51 @@ export default function RecipeForm({ initialData = null, onSuccess }) {
                             min="0"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
                         />
+                    </div>
+                </div>
+            </div>
+
+            {/* Tags */}
+            <div className="mb-8">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">🏷️ Tags</h3>
+
+                <div className="space-y-4">
+                    <div>
+                        <p className="text-sm text-gray-600 mb-2">Régime alimentaire</p>
+                        <div className="flex flex-wrap gap-2">
+                            {ALL_TAGS.regime.map((tag) => (
+                                <button
+                                    key={tag.value}
+                                    type="button"
+                                    onClick={() => toggleTag(tag.value)}
+                                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${selectedTags.includes(tag.value)
+                                            ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
+                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        }`}
+                                >
+                                    {tag.icon} {tag.value}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <p className="text-sm text-gray-600 mb-2">Saison</p>
+                        <div className="flex flex-wrap gap-2">
+                            {ALL_TAGS.saison.map((tag) => (
+                                <button
+                                    key={tag.value}
+                                    type="button"
+                                    onClick={() => toggleTag(tag.value)}
+                                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${selectedTags.includes(tag.value)
+                                            ? `${tag.color} ring-2 ring-offset-1 ring-gray-400`
+                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        }`}
+                                >
+                                    {tag.icon} {tag.value}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
