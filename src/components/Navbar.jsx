@@ -46,6 +46,14 @@ export default function Navbar() {
                                 >
                                     + Nouvelle recette
                                 </Link>
+                                {user.is_admin && (
+                                    <Link
+                                        to="/admin"
+                                        className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium"
+                                    >
+                                        👑 Admin
+                                    </Link>
+                                )}
                                 <div className="flex items-center gap-3">
                                     <span className="text-white/90 text-sm">👤 {user.nom}</span>
                                     <button

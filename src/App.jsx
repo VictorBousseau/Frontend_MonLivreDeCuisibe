@@ -12,6 +12,7 @@ import RecipeDetailPage from './pages/RecipeDetailPage';
 import NewRecipePage from './pages/NewRecipePage';
 import EditRecipePage from './pages/EditRecipePage';
 import FridgeSearchPage from './pages/FridgeSearchPage';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/new" element={<NewRecipePage />} />
               <Route path="/edit/:id" element={<EditRecipePage />} />
               <Route path="/frigo" element={<FridgeSearchPage />} />
+              <Route path="/admin" element={<AdminPage />} />
             </Routes>
           </main>
         </div>
