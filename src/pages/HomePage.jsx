@@ -1,5 +1,5 @@
 /**
- * HomePage - Affichage des recettes par catégorie avec recherche
+ * HomePage - Affichage des recettes par catégorie avec recherche et filtre auteur
  */
 import { useState, useEffect } from 'react';
 import { recipesAPI } from '../api';
@@ -21,13 +21,13 @@ export default function HomePage() {
     const [filter, setFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchInput, setSearchInput] = useState('');
+    const [authorFilter, setAuthorFilter] = useState(null);
+    const [authorName, setAuthorName] = useState('');
 
-    const fetchRecipes = async (search = '') => {
+    const fetchRecipes = async (search = '', auteurId = null) => {
         setLoading(true);
         try {
-            const params = {};
-            if (search) params.search = search;
-            const response = await recipesAPI.getAll(null, search);
+            const response = await recipesAPI.getAll(null, search, auteurId);
             setRecipes(response.data);
         } catch (err) {
             setError('Erreur lors du chargement des recettes');
@@ -37,8 +37,8 @@ export default function HomePage() {
     };
 
     useEffect(() => {
-        fetchRecipes(searchQuery);
-    }, [searchQuery]);
+        fetchRecipes(searchQuery, authorFilter);
+    }, [searchQuery, authorFilter]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -48,6 +48,18 @@ export default function HomePage() {
     const clearSearch = () => {
         setSearchInput('');
         setSearchQuery('');
+    };
+
+    const handleAuthorClick = (auteurId, nom) => {
+        setAuthorFilter(auteurId);
+        setAuthorName(nom);
+        setSearchQuery('');
+        setSearchInput('');
+    };
+
+    const clearAuthorFilter = () => {
+        setAuthorFilter(null);
+        setAuthorName('');
     };
 
     // Grouper les recettes par catégorie
@@ -104,9 +116,21 @@ export default function HomePage() {
                 </div>
             </form>
 
-            {searchQuery && (
-                <div className="text-center mb-4 text-gray-600">
-                    Résultats pour "<span className="font-semibold">{searchQuery}</span>"
+            {/* Indicateur de filtre actif */}
+            {(searchQuery || authorFilter) && (
+                <div className="text-center mb-4 flex items-center justify-center gap-2 flex-wrap">
+                    {searchQuery && (
+                        <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm">
+                            🔍 "{searchQuery}"
+                            <button onClick={clearSearch} className="ml-2 hover:text-orange-900">✕</button>
+                        </span>
+                    )}
+                    {authorFilter && (
+                        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+                            👤 Recettes de {authorName}
+                            <button onClick={clearAuthorFilter} className="ml-2 hover:text-blue-900">✕</button>
+                        </span>
+                    )}
                 </div>
             )}
 
@@ -147,15 +171,23 @@ export default function HomePage() {
                 </div>
             ) : recipes.length === 0 ? (
                 <div className="text-center py-12 bg-white rounded-2xl shadow">
-                    <div className="text-6xl mb-4">{searchQuery ? '🔍' : '🍳'}</div>
+                    <div className="text-6xl mb-4">{searchQuery || authorFilter ? '🔍' : '🍳'}</div>
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                        {searchQuery ? 'Aucune recette trouvée' : "Aucune recette pour l'instant"}
+                        {searchQuery || authorFilter ? 'Aucune recette trouvée' : "Aucune recette pour l'instant"}
                     </h3>
                     <p className="text-gray-600">
-                        {searchQuery
+                        {searchQuery || authorFilter
                             ? 'Essayez avec un autre terme de recherche'
                             : 'Commencez par ajouter votre première recette !'}
                     </p>
+                    {(searchQuery || authorFilter) && (
+                        <button
+                            onClick={() => { clearSearch(); clearAuthorFilter(); }}
+                            className="mt-4 text-orange-500 hover:underline"
+                        >
+                            Voir toutes les recettes
+                        </button>
+                    )}
                 </div>
             ) : (
                 <div className="space-y-10">
@@ -174,7 +206,11 @@ export default function HomePage() {
                                 </h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {catRecipes.map((recipe) => (
-                                        <RecipeCard key={recipe.id} recipe={recipe} />
+                                        <RecipeCard
+                                            key={recipe.id}
+                                            recipe={recipe}
+                                            onAuthorClick={handleAuthorClick}
+                                        />
                                     ))}
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 /**
- * RecipeCard - Carte d'affichage d'une recette
+ * RecipeCard - Carte d'affichage d'une recette avec auteur
  */
 import { Link } from 'react-router-dom';
 
@@ -10,8 +10,16 @@ const categorieColors = {
     'Gourmandises': 'bg-amber-500',
 };
 
-export default function RecipeCard({ recipe }) {
+export default function RecipeCard({ recipe, onAuthorClick }) {
     const bgColor = categorieColors[recipe.categorie] || 'bg-gray-500';
+
+    const handleAuthorClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (onAuthorClick) {
+            onAuthorClick(recipe.auteur_id, recipe.auteur?.nom);
+        }
+    };
 
     return (
         <Link
@@ -19,8 +27,17 @@ export default function RecipeCard({ recipe }) {
             className="block bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
         >
             {/* Bandeau catégorie */}
-            <div className={`${bgColor} text-white text-sm font-semibold px-4 py-2`}>
-                {recipe.categorie}
+            <div className={`${bgColor} text-white text-sm font-semibold px-4 py-2 flex justify-between items-center`}>
+                <span>{recipe.categorie}</span>
+                {recipe.auteur && (
+                    <button
+                        onClick={handleAuthorClick}
+                        className="text-xs bg-white/20 hover:bg-white/30 px-2 py-1 rounded transition-colors"
+                        title={`Voir les recettes de ${recipe.auteur.nom}`}
+                    >
+                        👤 {recipe.auteur.nom}
+                    </button>
+                )}
             </div>
 
             <div className="p-5">
